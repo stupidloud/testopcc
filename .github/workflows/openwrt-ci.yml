@@ -30,7 +30,7 @@ jobs:
         with:
           repository: 'coolsnowwolf/lede'
           ref: master
-          depth: 0
+          fetch-depth: 0
 
       - name: cache
         uses: klever1988/hello-world-javascript-action@main
