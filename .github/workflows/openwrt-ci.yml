@@ -68,7 +68,7 @@ jobs:
           #make toolchain/compile -j$[`nproc`+1]
           #make tools/compile -j$[`nproc`+1]
           #make target/compile -j$[`nproc`+1]
-          make target/compile -j$[`nproc`+1]
+          make -j$[`nproc`+1]
           echo "======================="
           echo "Space usage:"
           echo "======================="
