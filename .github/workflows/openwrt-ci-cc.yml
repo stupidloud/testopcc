@@ -59,6 +59,7 @@ jobs:
         run: |
           echo 'CONFIG_CCACHE=y' > .config
           make defconfig
+          grep -i ccache .config
 
       - name: Make download
         run: |
