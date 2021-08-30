@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: 'https://github.com/coolsnowwolf/lede'
+          repository: 'coolsnowwolf/lede'
           ref: master
 
       - name: cache
