@@ -64,7 +64,7 @@ jobs:
 
       - name: Compile firmware
         run: |
-          make toolchain/compile -j$[`nproc`+1]
+          make target/compile -j$[`nproc`+1]
           echo "======================="
           echo "Space usage:"
           echo "======================="
