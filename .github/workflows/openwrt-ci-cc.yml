@@ -68,9 +68,10 @@ jobs:
       - name: Generate configuration file
         run: |
           make defconfig
-          sed '/INCLUDE/!s/\(CONFIG_PACKAGE_luci-app-.*\)=y/# \1 is not set/' .config | grep CONFIG_PACKAGE_luci-app | grep -v INCLUDE > t.seed
+          #sed '/INCLUDE/!s/\(CONFIG_PACKAGE_luci-app-.*\)=y/# \1 is not set/' .config | grep CONFIG_PACKAGE_luci-app | grep -v INCLUDE > t.seed
           echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> t.seed
-          mv t.seed .config
+          #mv t.seed .config
+          echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config
           make defconfig
           cat .config
 
