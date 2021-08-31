@@ -19,7 +19,7 @@ jobs:
 
     name: Build OpenWrt firmware
 
-    runs-on: ubuntu-18.04
+    runs-on: self-hosted
 
     if: github.event.repository.owner.id == github.event.sender.id
 
@@ -59,9 +59,12 @@ jobs:
 
       - name: Generate configuration file
         run: |
-          echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' > .config
           make defconfig
-          grep -i ccache .config
+          sed '/INCLUDE/!s/\(CONFIG_PACKAGE_luci-app-.*\)=y/# \1 is not set/' .config | grep CONFIG_PACKAGE_luci-app > t.seed
+          echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> t.seed
+          mv t.seed .config
+          make defconfig
+          cat .config
 
       - name: Make download
         run: |
