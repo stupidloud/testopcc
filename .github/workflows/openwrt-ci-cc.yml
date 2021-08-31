@@ -8,6 +8,14 @@
 name: OpenWrt-CI with ccache
 
 on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: 'select runner'
+        default: 'ubuntu-18.04'
+        required: false
+
+
   schedule:
     - cron: 0 20 * * *
   watch:
@@ -19,7 +27,7 @@ jobs:
 
     name: Build OpenWrt firmware
 
-    runs-on: self-hosted
+    runs-on: ${{ github.event.inputs.runner }}
 
     if: github.event.repository.owner.id == github.event.sender.id
 
