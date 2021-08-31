@@ -8,6 +8,13 @@
 name: OpenWrt-CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      device:
+        description: 'select runner'
+        default: 'ubuntu-18.04'
+        required: false
+
   schedule:
     - cron: 0 20 * * *
   watch:
@@ -34,6 +41,8 @@ jobs:
 
       - name: cache
         uses: klever1988/hello-world-javascript-action@main
+        with: |
+          skip: false
 
       - name: Space cleanup
         env:
