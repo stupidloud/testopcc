@@ -41,7 +41,7 @@ jobs:
 
       - name: cache
         uses: klever1988/hello-world-javascript-action@main
-        with: |
+        with:
           skip: false
 
       - name: Space cleanup
