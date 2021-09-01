@@ -43,7 +43,7 @@ jobs:
       - name: cache
         uses: klever1988/hello-world-javascript-action@main
         with:
-          skip: 'true'
+          ccache: 'true'
 
       - name: Space cleanup
         env:
