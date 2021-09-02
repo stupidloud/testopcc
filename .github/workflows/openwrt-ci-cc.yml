@@ -14,6 +14,9 @@ on:
         description: 'select runner'
         default: 'ubuntu-18.04'
         required: false
+      devices:
+        description: 'build devices'
+        default: '["x86", "r2s"]'
 
 
   schedule:
@@ -24,6 +27,11 @@ on:
 jobs:
 
   build_openwrt:
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        device: ${{fromJSON(github.event.inputs.devices)}}
 
     name: Build OpenWrt firmware
 
@@ -68,9 +76,10 @@ jobs:
 
       - name: Generate configuration file
         run: |
+          svn export https://github.com/klever1988/testopcc/trunk . --force
+          mv ${{matrix.device}}.config.seed .config
           make defconfig
-          #sed '/INCLUDE/!s/\(CONFIG_PACKAGE_luci-app-.*\)=y/# \1 is not set/' .config | grep CONFIG_PACKAGE_luci-app | grep -v INCLUDE > t.seed
-          echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> t.seed
+          sed '/INCLUDE/!s/\(CONFIG_PACKAGE_luci-app-.*\)=y/# \1 is not set/' .config | grep CONFIG_PACKAGE_luci-app | grep -v INCLUDE > t.seed
           #mv t.seed .config
           echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config
           make defconfig
