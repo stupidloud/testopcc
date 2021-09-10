@@ -74,6 +74,10 @@ jobs:
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          svn export https://github.com/openwrt/luci/branches/openwrt-18.06 luci
+          echo > more_luci.txt
+          cd luci
+          ls -d */ | xargs -n1 -i diff -q {} ../feeds/luci/{} | grep Only | grep feeds | grep -E applications\|themes | awk '{print $4}' | xargs -n1 -i echo CONFIG_PACKAGE_{}=m >> ~/lede/more_luci.txt
 
       - name: Generate configuration file
         run: |
@@ -83,6 +87,8 @@ jobs:
           sed '/INCLUDE/!s/\(CONFIG_PACKAGE_luci-app-.*\)=y/# \1 is not set/' .config | grep CONFIG_PACKAGE_luci-app | grep -v INCLUDE > t.seed
           #cat ${{matrix.device}}.config.seed t.seed > .config
           echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config
+          find package/ -type d -name luci-app-* | rev | cut -d'/' -f1 | rev | xargs -n1 -i echo CONFIG_PACKAGE_{}=m >> .config
+          cat more_luci.txt >> .config
           make defconfig
           cat .config
 
