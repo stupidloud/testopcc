@@ -94,7 +94,7 @@ jobs:
 
       - name: Make download
         run: |
-          make download -j
+          while true; do make download -j && break || true; done
           find dl -size -1024c -exec rm -f {} \;
 
       - name: Compile firmware
