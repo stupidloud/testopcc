@@ -44,7 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: 'coolsnowwolf/lede'
+          repository: 'immortalwrt/immortalwrt'
           ref: master
           fetch-depth: 0
 
@@ -53,7 +53,7 @@ jobs:
         with:
           ccache: 'true'
           toolchain: 'true'
-          skip: 'true'
+          skip: 'false'
 
       - name: Space cleanup
         env:
