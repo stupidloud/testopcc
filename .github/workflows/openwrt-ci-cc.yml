@@ -31,7 +31,7 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        device: ${{fromJSON(github.event.inputs.devices || ["x64","newifi3","cr660x","k2"])}}
+        device: ${{fromJSON(github.event.inputs.devices) || ["x64","newifi3","cr660x","k2"]}}
 
     name: Build OpenWrt firmware
 
