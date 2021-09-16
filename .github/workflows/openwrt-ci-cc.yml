@@ -26,16 +26,33 @@ on:
 
 jobs:
 
+  create-matrix:
+    runs-on: ubuntu-latest
+    name: Create Matrix
+    steps:
+      - name: Set Matrix
+        id: set-matrix
+        env:
+          MATRIX: ${{github.event.inputs.devices}}
+        run: |
+          if [ -z $MATRIX ]; then
+            MATRIX='["x86","r2s"]'
+          fi
+          echo "::set-output name=matrix::$MATRIX"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }} 
+
+
   build_openwrt:
     strategy:
       max-parallel: 1
       fail-fast: false
       matrix:
-        device: ["x64","newifi3","cr660x","k2"]
+        device: ${{ fromJSON(needs.create-matrix.outputs.matrix) }}
 
     name: Build OpenWrt firmware
 
-    runs-on: ${{ github.event.inputs.runner }}
+    runs-on: ubuntu-latest
 
     if: github.event.repository.owner.id == github.event.sender.id
 
