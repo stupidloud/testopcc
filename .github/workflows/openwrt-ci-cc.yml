@@ -117,7 +117,7 @@ jobs:
 
       - name: Compile firmware
         run: |
-          make -j$[`nproc`+1]
+          make -j$[`nproc`+1] || make V=sc
           echo "======================="
           echo "Space usage:"
           echo "======================="
