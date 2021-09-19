@@ -46,7 +46,7 @@ jobs:
   build_openwrt:
     needs: create-matrix
     strategy:
-      max-parallel: 1
+      #max-parallel: 1
       fail-fast: false
       matrix:
         device: ${{ fromJSON(needs.create-matrix.outputs.matrix) }}
