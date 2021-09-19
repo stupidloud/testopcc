@@ -71,7 +71,7 @@ jobs:
         with:
           ccache: 'true'
           toolchain: 'true'
-          skip: 'false'
+          mixkey: ${{matrix.device}}
 
       - name: Space cleanup
         env:
