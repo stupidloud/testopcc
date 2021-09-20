@@ -99,6 +99,7 @@ jobs:
 
       - name: Generate configuration file
         run: |
+          sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.4/' target/linux/x86/Makefile
           svn export https://github.com/klever1988/testopcc/trunk . --force
           cp ${{matrix.device}}.config.seed .config
           make defconfig
